@@ -17,7 +17,7 @@
   // ---------- SETTINGS (change here, all listings update) ----------
   var SETTINGS = {
     formUrl: "https://go.bowen-links.com/widget/form/UnsUbtDeRcsf4kFPJ61I",
-    buttonText: "💬 SMS Property Updates",
+    buttonText: "Live SMS Updates",
     autoOpenSeconds: 0,          // 0 = only opens on click. e.g. 20 = opens itself after 20s (once per visit)
     title: "Don't miss a move on {address}.",
     sub: "We'll text you when there's:",
@@ -48,8 +48,10 @@
     var css = "@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@400;500&family=DM+Sans:wght@500;800&display=swap');" +
       ".sms-watch-btn{font-family:'DM Sans',sans-serif!important;font-size:17.6px!important;font-weight:800!important;color:#fff!important;background:#435249!important;border:2px solid #435249!important;border-radius:0!important;padding:18px 48px!important;cursor:pointer;transition:all .2s ease;line-height:1.2!important;display:inline-block!important}" +
       ".sms-watch-btn:hover{background:#fff!important;color:#435249!important}" +
-      ".sms-watch-btn.sms-watch-float{position:fixed!important;right:24px!important;bottom:24px!important;z-index:9998!important;padding:14px 22px!important;font-size:15px!important;box-shadow:0 6px 20px rgba(0,0,0,.25)!important;border-radius:999px!important;margin:0!important}" +
-      "@media (max-width:600px){.sms-watch-btn.sms-watch-float{right:14px!important;bottom:14px!important;padding:12px 18px!important;font-size:14px!important}}" +
+      ".sms-watch-btn.sms-watch-float{position:fixed!important;right:24px!important;bottom:24px!important;z-index:9998!important;display:inline-flex!important;align-items:center;gap:10px;padding:14px 24px!important;font-size:17px!important;background:#fff!important;color:#435249!important;border:3px solid #435249!important;border-radius:0!important;box-shadow:0 6px 20px rgba(0,0,0,.18)!important;margin:0!important}" +
+      ".sms-watch-btn.sms-watch-float:hover{background:#435249!important;color:#fff!important}" +
+      ".sms-watch-btn.sms-watch-float svg{width:22px;height:22px;flex:none}" +
+      "@media (max-width:600px){.sms-watch-btn.sms-watch-float{right:14px!important;bottom:14px!important;padding:11px 16px!important;font-size:15px!important}}" +
       ".sms-watch-modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99999;padding:16px}" +
       ".sms-watch-modal.open{display:flex}" +
       ".sms-watch-box{background:#fff;width:100%;max-width:520px;max-height:92vh;overflow:auto;overflow-x:hidden;border-radius:0;padding:0 20px 12px;position:relative;scrollbar-width:none}" +
@@ -73,7 +75,8 @@
       var fb = document.createElement("button");
       fb.type = "button";
       fb.className = "sms-watch-btn sms-watch-float";
-      fb.textContent = SETTINGS.buttonText;
+      fb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg><span></span>';
+      fb.querySelector("span").textContent = SETTINGS.buttonText;
       document.body.appendChild(fb);
     }
 
