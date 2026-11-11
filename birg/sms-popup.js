@@ -1,7 +1,7 @@
 /* ============================================================
    BIRG — "Get SMS updates on this home" pop-up
    Loaded on each listing page with ONE line:
-     <script src="https://cdn.jsdelivr.net/gh/buzz-png/nsb-widgets@main/birg/sms-popup.js" defer></script>
+     <script src="https://buzz-png.github.io/nsb-widgets/birg/sms-popup.js" defer></script>
 
    On listing pages (/property/...) it reads the address (H1),
    WordPress listing ID (postid-####) and photo (og:image),
