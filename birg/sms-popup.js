@@ -17,6 +17,7 @@
   // ---------- SETTINGS (change here, all listings update) ----------
   var SETTINGS = {
     formUrl: "https://go.bowen-links.com/widget/form/UnsUbtDeRcsf4kFPJ61I",
+    statusUrl: "https://listing-matches.vibepreview.app/api/public/widget-status",
     buttonText: "Live SMS Updates",
     autoOpenSeconds: 0,          // 0 = only opens on click. e.g. 20 = opens itself after 20s (once per visit)
     title: "Don't miss a move on {address}.",
@@ -30,7 +31,23 @@
     else document.addEventListener("DOMContentLoaded", fn);
   }
 
-  ready(function () {
+  // Kill switch: Quickfire SMS > Settings > Website pop-ups.
+  // Hide only if it clearly says off; if it can't be reached, stay on.
+  function checkSwitch(cb) {
+    var done = false;
+    function go(on) { if (!done) { done = true; if (on) cb(); } }
+    setTimeout(function () { go(true); }, 3000);
+    try {
+      fetch(SETTINGS.statusUrl, { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { go(!(j && j.popups === false)); })
+        .catch(function () { go(true); });
+    } catch (err) { go(true); }
+  }
+
+  ready(function () { checkSwitch(build); });
+
+  function build() {
     var isListing = /^\/property\//.test(location.pathname) || document.body.classList.contains("single-property");
     var testBtn = document.querySelector(".sms-watch-btn[data-listing]");
     if (!isListing && !testBtn) return;
@@ -143,5 +160,5 @@
         }, SETTINGS.autoOpenSeconds * 1000);
       }
     }
-  });
+  }
 })();
