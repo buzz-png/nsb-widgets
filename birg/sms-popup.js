@@ -70,12 +70,12 @@
     var css = "@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@400;500&family=DM+Sans:wght@500;800&display=swap');" +
       ".sms-watch-btn{font-family:'DM Sans',sans-serif!important;font-size:17.6px!important;font-weight:800!important;color:#fff!important;background:#435249!important;border:2px solid #435249!important;border-radius:0!important;padding:18px 48px!important;cursor:pointer;transition:all .2s ease;line-height:1.2!important;display:inline-block!important}" +
       ".sms-watch-btn:hover{background:#fff!important;color:#435249!important}" +
-      ".sms-watch-btn.sms-watch-float{position:fixed!important;right:24px!important;bottom:24px!important;z-index:9998!important;display:inline-flex!important;align-items:center;gap:10px;padding:14px 24px!important;font-size:17px!important;background:#fff!important;color:#435249!important;border:3px solid #435249!important;border-radius:0!important;box-shadow:0 6px 20px rgba(0,0,0,.18)!important;margin:0!important}" +
+      ".sms-watch-btn.sms-watch-float{position:fixed!important;right:24px!important;bottom:24px!important;z-index:9998!important;display:inline-flex!important;align-items:center;gap:10px;padding:14px 24px!important;font-size:17px!important;background:#fff!important;color:#435249!important;border:2px solid #435249!important;border-radius:0!important;box-shadow:0 6px 20px rgba(0,0,0,.18)!important;margin:0!important}" +
       ".sms-watch-btn.sms-watch-float:hover{background:#435249!important;color:#fff!important}" +
       ".sms-watch-btn.sms-watch-float svg{width:22px;height:22px;flex:none}" +
       "@media (max-width:768px){.sms-watch-btn.sms-watch-float{display:none!important}}" +
       ".sms-watch-inline-wrap{display:none;padding:18px 20px;text-align:center;background:#fff}" +
-      ".sms-watch-inline-wrap .sms-watch-btn{width:100%;max-width:420px;display:inline-flex!important;align-items:center;justify-content:center;gap:10px;padding:15px 20px!important;background:#fff!important;color:#435249!important;border:3px solid #435249!important}" +
+      ".sms-watch-inline-wrap .sms-watch-btn{width:100%;max-width:420px;display:inline-flex!important;align-items:center;justify-content:center;gap:10px;padding:15px 20px!important;background:#fff!important;color:#435249!important;border:2px solid #435249!important}" +
       ".sms-watch-inline-wrap .sms-watch-btn svg{width:22px;height:22px;flex:none}" +
       "@media (max-width:768px){.sms-watch-inline-wrap{display:block}}" +
       ".sms-watch-modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99999;padding:16px}" +
