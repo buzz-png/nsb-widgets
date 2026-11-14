@@ -12,5 +12,12 @@
 </head>
 <body>
 <p>You're in &#10003;</p>
+<script>
+  // Hand the new contact's phone + ID up to the pop-up so the quiz can skip retyping
+  try {
+    var q = new URLSearchParams(location.search);
+    parent.postMessage({ qf: "thanks", phone: q.get("phone") || "", cid: q.get("cid") || "" }, "*");
+  } catch (e) {}
+</script>
 </body>
 </html>

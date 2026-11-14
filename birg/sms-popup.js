@@ -144,6 +144,12 @@
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
     }
+    var signup = { phone: "", cid: "" };
+    window.addEventListener("message", function (e) {
+      if (e.origin === "https://buzz-png.github.io" && e.data && e.data.qf === "thanks") {
+        signup.phone = String(e.data.phone || ""); signup.cid = String(e.data.cid || "");
+      }
+    });
     function showStep2(address, id) {
       modal.classList.add("step2");
       frameWrap.innerHTML =
@@ -156,7 +162,9 @@
       b.addEventListener("click", function (e) {
         e.preventDefault(); e.stopPropagation();
         modal.classList.add("quiz");
-        var q = SETTINGS.quizUrl + "?similar=" + encodeURIComponent(id || "") + "&listing=" + encodeURIComponent(address || "");
+        var q = SETTINGS.quizUrl + "?similar=" + encodeURIComponent(id || "") + "&listing=" + encodeURIComponent(address || "") +
+          (signup.phone && signup.phone.indexOf("{{") < 0 ? "&phone=" + encodeURIComponent(signup.phone) : "") +
+          (signup.cid && signup.cid.indexOf("{{") < 0 ? "&cid=" + encodeURIComponent(signup.cid) : "");
         frameWrap.innerHTML = '<iframe src="' + q + '" title="Find similar homes"></iframe>';
         var hero = modal.querySelector(".sms-watch-hero"); if (hero) hero.hidden = true;
       });
