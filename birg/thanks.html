@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>Thanks</title>
 <style>
-  body{margin:0;background:#fff;font-family:'DM Sans',Arial,sans-serif;color:#435249;display:flex;align-items:center;justify-content:center;height:100vh;text-align:center}
+  body{margin:0;background:transparent;font-family:'DM Sans',Arial,sans-serif;color:#435249;display:flex;align-items:center;justify-content:center;height:100vh;text-align:center}
   p{font-size:20px;font-weight:700}
 </style>
 </head>
@@ -21,7 +21,14 @@
     var cid = q.get("cid") || "";
     var id = q.get("listing_id") || "";
     if (cid.indexOf("{{") >= 0) cid = "";
-    try { if (window.top !== window) parent.postMessage({ qf: "thanks", cid: cid }, "*"); } catch (e) {}
+    var framed = false;
+    try { framed = window.top !== window; } catch (e) { framed = true; }
+    if (framed) {
+      // Inside the pop-up: tell it we're done; it flips to screen 2 instantly. No page reload.
+      try { parent.postMessage({ qf: "thanks", cid: cid }, "*"); } catch (e) {}
+      return;
+    }
+    // Only if the form opened full-window: bounce straight back to the listing.
     var back = id ? "https://bowenislandrealestate.com/?p=" + encodeURIComponent(id) : document.referrer || "https://bowenislandrealestate.com/";
     back += (back.indexOf("?") >= 0 ? "&" : "?") + "qf=done" + (cid ? "&qf_cid=" + encodeURIComponent(cid) : "");
     try { window.top.location.replace(back); } catch (e) { location.replace(back); }

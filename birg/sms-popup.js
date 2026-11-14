@@ -90,7 +90,7 @@
       ".sms-watch-close{position:absolute;top:6px;right:12px;border:0;font-size:30px;line-height:1;cursor:pointer;color:#435249;padding:4px;background:rgba(255,255,255,.9)!important;border-radius:50%!important;width:40px;height:40px;z-index:2}" +
       ".sms-watch-hero{display:block;width:calc(100% + 40px)!important;max-width:none!important;margin:0 -20px 18px;height:170px!important;object-fit:cover}" +
       ".sms-watch-hero[hidden]{display:none}" +
-      ".sms-watch-modal.step2 .sms-watch-hero.team{height:auto!important;aspect-ratio:2/1;object-position:center 30%}" +
+      ".sms-watch-modal.step2 .sms-watch-hero.team{height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;margin-bottom:0!important}" +
       ".sms-watch-box > .sms-watch-hero[hidden] + .sms-watch-title{margin-top:32px}" +
       ".sms-watch-title{font-family:'DM Sans',sans-serif;font-weight:800;font-size:22px;margin:0 0 2px;color:#435249;padding:0 12px}" +
       ".sms-watch-sub{font-family:'Bitter',serif;font-size:16px;margin:0 0 8px;color:#435249;padding:0 12px}" +
@@ -98,10 +98,12 @@
       ".sms-watch-list li{padding:3px 0 3px 26px;position:relative;white-space:nowrap}" +
       ".sms-watch-list li:before{content:'\\2713';position:absolute;left:2px;top:3px;font-weight:700;color:#435249}" +
       "#sms-watch-frame iframe{width:100%;height:600px;border:0;display:block}" +
-      ".sms-watch-step2{text-align:center;padding:6px 8px 18px;font-family:'Bitter',serif;color:#435249}" +
+      ".sms-watch-step2{text-align:center;padding:22px 8px 18px;font-family:'Bitter',serif;color:#435249}" +
+      ".sms-watch-step2 h2,.sms-watch-step2 p,.sms-watch-step2 span{margin-top:0!important;padding-top:0!important}" +
+      ".sms-watch-step2 .sms-watch-names{margin:0!important}" +
       ".sms-watch-step2 .sms-watch-from{display:block;font-family:'Bitter',serif;font-weight:700;font-size:16px;color:#6b7a70;margin:0}" +
       ".sms-watch-step2 .sms-watch-names{font-family:'Bitter',serif;font-weight:800;font-size:26px;line-height:1.15;color:#435249;margin:0}" +
-      ".sms-watch-step2 .sms-watch-letter{font-family:'Bitter',serif;font-size:17px;line-height:1.6;color:#435249;margin:16px auto 0;max-width:420px}" +
+      ".sms-watch-step2 .sms-watch-letter{font-family:'Bitter',serif;font-size:17px;line-height:1.6;color:#435249;margin:14px auto 0!important;max-width:420px}" +
       ".sms-watch-step2 .sms-watch-letter strong{font-weight:800}" +
       ".sms-watch-step2 .sms-watch-sign{font-family:'Bitter',serif;font-style:italic;font-size:17px;color:#435249;margin:14px 0 24px}" +
       ".sms-watch-step2 .sms-watch-done{font-family:'DM Sans',sans-serif;font-weight:800;font-size:24px;color:#435249;margin:6px 0 10px}" +
@@ -163,10 +165,11 @@
       modal.classList.remove("step2", "quiz");
       frameWrap.innerHTML = '<iframe src="' + src + '" title="Get SMS updates"></iframe>';
       // Screen 2: when the form finishes and redirects (2nd load), swap to "You're in" + similar homes
+      current = { address: address, id: id };
       var loads = 0;
       frameWrap.querySelector("iframe").addEventListener("load", function () {
         loads++;
-        if (loads === 2) showStep2(address, id);
+        if (loads === 2 && !modal.classList.contains("step2")) showStep2(address, id);
       });
       modal.querySelector(".sms-watch-title").textContent = address
         ? SETTINGS.title.replace("{address}", address)
@@ -175,9 +178,13 @@
       modal.setAttribute("aria-hidden", "false");
     }
     var signup = { cid: "" };
+    var current = { address: "", id: "" };
     window.addEventListener("message", function (e) {
       if (e.origin === "https://buzz-png.github.io" && e.data && e.data.qf === "thanks") {
         signup.cid = String(e.data.cid || "");
+        // Snappy: swap to screen 2 the moment the form says it's done (no page reload)
+        try { localStorage.setItem("birgSmsSignedUp:" + location.pathname, "1"); } catch (err) {}
+        if (modal.classList.contains("open") && !modal.classList.contains("step2")) showStep2(current.address, current.id);
       }
     });
     function showStep2(address, id) {
