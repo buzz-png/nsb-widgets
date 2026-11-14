@@ -19,7 +19,7 @@
     formUrl: "https://go.bowen-links.com/widget/form/UnsUbtDeRcsf4kFPJ61I",
     statusUrl: "https://listing-matches.vibepreview.app/api/public/widget-status",
     buttonText: "TXT Me Any Updates",
-    autoOpenSeconds: 0,          // 0 = only opens on click. e.g. 20 = opens itself after 20s (once per visit)
+    autoOpenSeconds: 20,         // 0 = only opens on click. e.g. 20 = opens itself after 20s (once per visit)
     title: "Don't miss a move on {address}.",
     sub: "We'll text you when there's:",
     bullets: ["Price drops", "Open houses", "Just sold", "Big news"],
@@ -73,7 +73,11 @@
       ".sms-watch-btn.sms-watch-float{position:fixed!important;right:24px!important;bottom:24px!important;z-index:9998!important;display:inline-flex!important;align-items:center;gap:10px;padding:14px 24px!important;font-size:17px!important;background:#fff!important;color:#435249!important;border:3px solid #435249!important;border-radius:0!important;box-shadow:0 6px 20px rgba(0,0,0,.18)!important;margin:0!important}" +
       ".sms-watch-btn.sms-watch-float:hover{background:#435249!important;color:#fff!important}" +
       ".sms-watch-btn.sms-watch-float svg{width:22px;height:22px;flex:none}" +
-      "@media (max-width:600px){.sms-watch-btn.sms-watch-float{right:14px!important;bottom:14px!important;padding:11px 16px!important;font-size:15px!important}}" +
+      "@media (max-width:768px){.sms-watch-btn.sms-watch-float{display:none!important}}" +
+      ".sms-watch-inline-wrap{display:none;padding:18px 20px;text-align:center;background:#fff}" +
+      ".sms-watch-inline-wrap .sms-watch-btn{width:100%;max-width:420px;display:inline-flex!important;align-items:center;justify-content:center;gap:10px;padding:15px 20px!important;background:#fff!important;color:#435249!important;border:3px solid #435249!important}" +
+      ".sms-watch-inline-wrap .sms-watch-btn svg{width:22px;height:22px;flex:none}" +
+      "@media (max-width:768px){.sms-watch-inline-wrap{display:block}}" +
       ".sms-watch-modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:99999;padding:16px}" +
       ".sms-watch-modal.open{display:flex}" +
       ".sms-watch-box{background:#fff;width:100%;max-width:520px;max-height:92vh;overflow:auto;overflow-x:hidden;border-radius:0;padding:0 20px 12px;position:relative;scrollbar-width:none}" +
@@ -107,6 +111,18 @@
       fb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg><span></span>';
       fb.querySelector("span").textContent = SETTINGS.buttonText;
       document.body.appendChild(fb);
+
+      // Phones: same button sitting in the page, just under the top photo
+      var hero = h1;
+      while (hero && hero.parentElement && hero.parentElement !== document.body && hero.offsetHeight < window.innerHeight * 0.5) hero = hero.parentElement;
+      if (hero && hero.parentNode) {
+        var wrap = document.createElement("div");
+        wrap.className = "sms-watch-inline-wrap";
+        var ib = fb.cloneNode(true);
+        ib.className = "sms-watch-btn sms-watch-inline";
+        wrap.appendChild(ib);
+        hero.parentNode.insertBefore(wrap, hero.nextSibling);
+      }
     }
 
     // ---- pop-up ----
@@ -200,6 +216,7 @@
     var qs = new URLSearchParams(location.search);
     if (qs.get("qf") === "done") {
       signup.cid = qs.get("qf_cid") || "";
+      try { localStorage.setItem("birgSmsSignedUp:" + location.pathname, "1"); } catch (e) {}
       try { qs.delete("qf"); qs.delete("qf_cid"); history.replaceState(null, "", location.pathname + (qs.toString() ? "?" + qs : "") + location.hash); } catch (e) {}
       var h = modal.querySelector(".sms-watch-hero");
       if (auto.image) { h.src = auto.image; h.hidden = false; }
@@ -210,7 +227,7 @@
 
     if (SETTINGS.autoOpenSeconds > 0 && isListing && auto.address) {
       var key = "birgSmsAuto:" + location.pathname, seen = false;
-      try { seen = sessionStorage.getItem(key) === "1"; } catch (err) {}
+      try { seen = sessionStorage.getItem(key) === "1" || localStorage.getItem("birgSmsSignedUp:" + location.pathname) === "1"; } catch (err) {}
       if (!seen) {
         setTimeout(function () {
           if (modal.classList.contains("open")) return;
