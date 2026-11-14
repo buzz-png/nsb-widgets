@@ -13,11 +13,19 @@
 <body>
 <p>You're in &#10003;</p>
 <script>
-  // Hand the new contact's phone + ID up to the pop-up so the quiz can skip retyping
-  try {
+  // The CRM form redirects here after a house sign-up.
+  // Send them straight back to the listing with screen 2 open.
+  // Only the CRM contact ID goes back (no phone number in the website's address bar).
+  (function () {
     var q = new URLSearchParams(location.search);
-    parent.postMessage({ qf: "thanks", phone: q.get("phone") || "", cid: q.get("cid") || "" }, "*");
-  } catch (e) {}
+    var cid = q.get("cid") || "";
+    var id = q.get("listing_id") || "";
+    if (cid.indexOf("{{") >= 0) cid = "";
+    try { if (window.top !== window) parent.postMessage({ qf: "thanks", cid: cid }, "*"); } catch (e) {}
+    var back = id ? "https://bowenislandrealestate.com/?p=" + encodeURIComponent(id) : document.referrer || "https://bowenislandrealestate.com/";
+    back += (back.indexOf("?") >= 0 ? "&" : "?") + "qf=done" + (cid ? "&qf_cid=" + encodeURIComponent(cid) : "");
+    try { window.top.location.replace(back); } catch (e) { location.replace(back); }
+  })();
 </script>
 </body>
 </html>

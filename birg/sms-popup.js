@@ -144,10 +144,10 @@
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
     }
-    var signup = { phone: "", cid: "" };
+    var signup = { cid: "" };
     window.addEventListener("message", function (e) {
       if (e.origin === "https://buzz-png.github.io" && e.data && e.data.qf === "thanks") {
-        signup.phone = String(e.data.phone || ""); signup.cid = String(e.data.cid || "");
+        signup.cid = String(e.data.cid || "");
       }
     });
     function showStep2(address, id) {
@@ -163,7 +163,6 @@
         e.preventDefault(); e.stopPropagation();
         modal.classList.add("quiz");
         var q = SETTINGS.quizUrl + "?similar=" + encodeURIComponent(id || "") + "&listing=" + encodeURIComponent(address || "") +
-          (signup.phone && signup.phone.indexOf("{{") < 0 ? "&phone=" + encodeURIComponent(signup.phone) : "") +
           (signup.cid && signup.cid.indexOf("{{") < 0 ? "&cid=" + encodeURIComponent(signup.cid) : "");
         frameWrap.innerHTML = '<iframe src="' + q + '" title="Find similar homes"></iframe>';
         var hero = modal.querySelector(".sms-watch-hero"); if (hero) hero.hidden = true;
@@ -192,6 +191,18 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
 
     // ---- optional timed auto-open (once per visit) ----
+    // Back from the form's thank-you bounce (?qf=done): open straight on screen 2, then tidy the address bar
+    var qs = new URLSearchParams(location.search);
+    if (qs.get("qf") === "done") {
+      signup.cid = qs.get("qf_cid") || "";
+      try { qs.delete("qf"); qs.delete("qf_cid"); history.replaceState(null, "", location.pathname + (qs.toString() ? "?" + qs : "") + location.hash); } catch (e) {}
+      var h = modal.querySelector(".sms-watch-hero");
+      if (auto.image) { h.src = auto.image; h.hidden = false; }
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      showStep2(auto.address, auto.id);
+    }
+
     if (SETTINGS.autoOpenSeconds > 0 && isListing && auto.address) {
       var key = "birgSmsAuto:" + location.pathname, seen = false;
       try { seen = sessionStorage.getItem(key) === "1"; } catch (err) {}
