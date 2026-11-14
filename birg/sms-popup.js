@@ -98,14 +98,16 @@
       ".sms-watch-list li{padding:3px 0 3px 26px;position:relative;white-space:nowrap}" +
       ".sms-watch-list li:before{content:'\\2713';position:absolute;left:2px;top:3px;font-weight:700;color:#435249}" +
       "#sms-watch-frame iframe{width:100%;height:600px;border:0;display:block}" +
-      ".sms-watch-step2{text-align:center;padding:22px 8px 18px;font-family:'Bitter',serif;color:#435249}" +
-      ".sms-watch-step2 h2,.sms-watch-step2 p,.sms-watch-step2 span{margin-top:0!important;padding-top:0!important}" +
+      ".sms-watch-step2{text-align:center;padding:20px 8px 18px;font-family:'Bitter',serif;color:#435249}" +
+      ".sms-watch-step2 .sms-watch-names,.sms-watch-step2 .sms-watch-names span{margin:0!important;padding:0!important}" +
+      ".sms-watch-step2 .sms-watch-names::before,.sms-watch-step2 .sms-watch-names::after{content:none!important;display:none!important}" +
+      ".sms-watch-modal.step2 #sms-watch-frame{margin:0!important;padding:0!important;min-height:0!important;height:auto!important}" +
       ".sms-watch-step2 .sms-watch-names{margin:0!important}" +
       ".sms-watch-step2 .sms-watch-from{display:block;font-family:'Bitter',serif;font-weight:700;font-size:16px;color:#6b7a70;margin:0}" +
       ".sms-watch-step2 .sms-watch-names{font-family:'Bitter',serif;font-weight:800;font-size:26px;line-height:1.15;color:#435249;margin:0}" +
       ".sms-watch-step2 .sms-watch-letter{font-family:'Bitter',serif;font-size:17px;line-height:1.6;color:#435249;margin:14px auto 0!important;max-width:420px}" +
       ".sms-watch-step2 .sms-watch-letter strong{font-weight:800}" +
-      ".sms-watch-step2 .sms-watch-sign{font-family:'Bitter',serif;font-style:italic;font-size:17px;color:#435249;margin:14px 0 24px}" +
+      ".sms-watch-step2 .sms-watch-sign{font-family:'Bitter',serif;font-style:italic;font-size:17px;color:#435249;margin:14px 0 24px!important}" +
       ".sms-watch-step2 .sms-watch-done{font-family:'DM Sans',sans-serif;font-weight:800;font-size:24px;color:#435249;margin:6px 0 10px}" +
       ".sms-watch-step2 .sms-watch-ok{font-family:'DM Sans',sans-serif;font-size:14px;color:#6b7a70;margin:4px 0 6px}" +
       ".sms-watch-step2 .sms-watch-note{font-family:'Bitter',serif;font-size:14px;color:#6b7a70;margin:12px 0 0}" +
@@ -194,7 +196,7 @@
         th.src = SETTINGS.teamPhoto; th.alt = "Frances & Jade"; th.classList.add("team"); th.hidden = false;
       }
       frameWrap.innerHTML =
-        '<div class="sms-watch-step2"><h2 class="sms-watch-names"><span class="sms-watch-from"></span><span class="n"></span></h2>' +
+        '<div class="sms-watch-step2"><div class="sms-watch-names" role="heading" aria-level="2"><span class="sms-watch-from"></span><span class="n"></span></div>' +
         '<p class="sms-watch-letter l1"></p><p class="sms-watch-letter l2"></p><p class="sms-watch-sign"></p>' +
         '<button type="button" class="sms-watch-btn sms-watch-similar"></button></div>';
       frameWrap.querySelector(".sms-watch-from").textContent = SETTINGS.msgFrom;
