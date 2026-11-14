@@ -32,7 +32,8 @@
     signoff: "Frances & Jade",
     similarButton: "Take a 1-minute quiz",
     quizUrl: "https://listing-matches.vibepreview.app/quiz/bowen",
-    teamPhoto: "https://buzz-png.github.io/nsb-widgets/birg/frances-jade.jpg" // top photo on screen 2 ("" = keep the home photo)
+    teamPhoto: "https://buzz-png.github.io/nsb-widgets/birg/frances-jade.jpg", // top photo on screen 2 ("" = keep the home photo)
+    loaderLogo: "https://buzz-png.github.io/nsb-widgets/birg/birg-logo-white.svg" // shown on green while the quiz loads
   };
   // ------------------------------------------------------------------
 
@@ -113,7 +114,12 @@
       ".sms-watch-step2 .sms-watch-note{font-family:'Bitter',serif;font-size:14px;color:#6b7a70;margin:12px 0 0}" +
       ".sms-watch-step2 .sms-watch-more{font-family:'Bitter',serif;font-size:17px;line-height:1.5;color:#435249;margin:0 auto 22px;max-width:380px}" +
       ".sms-watch-modal.step2 .sms-watch-sub,.sms-watch-modal.step2 .sms-watch-list,.sms-watch-modal.step2 .sms-watch-title{display:none}" +
-      ".sms-watch-modal.quiz #sms-watch-frame iframe{height:78vh}";
+      ".sms-watch-modal.quiz #sms-watch-frame iframe{height:78vh}" +
+      ".sms-watch-qwrap{position:relative}" +
+      ".sms-watch-loader{position:absolute;inset:0;background:#435249;display:flex;align-items:center;justify-content:center;transition:opacity .35s ease;z-index:3}" +
+      ".sms-watch-loader img{width:46%;max-width:220px;height:auto;animation:smsPulse 1.4s ease-in-out infinite}" +
+      ".sms-watch-loader.done{opacity:0;pointer-events:none}" +
+      "@keyframes smsPulse{0%,100%{opacity:.75}50%{opacity:1}}";
     var style = document.createElement("style");
     style.textContent = css;
     document.head.appendChild(style);
@@ -216,7 +222,13 @@
         modal.classList.add("quiz");
         var q = SETTINGS.quizUrl + "?similar=" + encodeURIComponent(id || "") + "&listing=" + encodeURIComponent(address || "") +
           (signup.cid && signup.cid.indexOf("{{") < 0 ? "&cid=" + encodeURIComponent(signup.cid) : "");
-        frameWrap.innerHTML = '<iframe src="' + q + '" title="Find similar homes"></iframe>';
+        // Green BIRG loading screen covers the quiz until it has loaded (no white flash)
+        frameWrap.innerHTML = '<div class="sms-watch-qwrap"><iframe src="' + q + '" title="Find similar homes"></iframe>' +
+          '<div class="sms-watch-loader"><img src="' + SETTINGS.loaderLogo + '" alt="Bowen Island Real Estate Group"></div></div>';
+        var qf = frameWrap.querySelector("iframe"), ld = frameWrap.querySelector(".sms-watch-loader"), t0 = Date.now();
+        function hideLoader() { setTimeout(function () { ld.classList.add("done"); setTimeout(function () { if (ld.parentNode) ld.parentNode.removeChild(ld); }, 400); }, Math.max(0, 600 - (Date.now() - t0))); }
+        qf.addEventListener("load", hideLoader);
+        setTimeout(hideLoader, 8000); // never leave it stuck
         var hero = modal.querySelector(".sms-watch-hero"); if (hero) hero.hidden = true;
       });
     }
