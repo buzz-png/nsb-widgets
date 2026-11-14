@@ -90,7 +90,7 @@
       ".sms-watch-close{position:absolute;top:6px;right:12px;border:0;font-size:30px;line-height:1;cursor:pointer;color:#435249;padding:4px;background:rgba(255,255,255,.9)!important;border-radius:50%!important;width:40px;height:40px;z-index:2}" +
       ".sms-watch-hero{display:block;width:calc(100% + 40px)!important;max-width:none!important;margin:0 -20px 18px;height:170px!important;object-fit:cover}" +
       ".sms-watch-hero[hidden]{display:none}" +
-      ".sms-watch-modal.step2 .sms-watch-hero.team{height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;margin-bottom:0!important}" +
+      ".sms-watch-modal.step2 .sms-watch-hero.team{height:auto!important;max-height:none!important;aspect-ratio:2/1!important;object-fit:cover!important;object-position:center!important;margin-bottom:0!important}" +
       ".sms-watch-box > .sms-watch-hero[hidden] + .sms-watch-title{margin-top:32px}" +
       ".sms-watch-title{font-family:'DM Sans',sans-serif;font-weight:800;font-size:22px;margin:0 0 2px;color:#435249;padding:0 12px}" +
       ".sms-watch-sub{font-family:'Bitter',serif;font-size:16px;margin:0 0 8px;color:#435249;padding:0 12px}" +
