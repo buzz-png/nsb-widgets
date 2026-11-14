@@ -161,7 +161,7 @@
 
     function openModal(address, id, img) {
       var hero = modal.querySelector(".sms-watch-hero");
-      hero.classList.remove("team"); hero.alt = "";
+      resetInline(); hero.classList.remove("team"); hero.alt = "";
       if (img) { hero.src = img; hero.hidden = false; } else { hero.removeAttribute("src"); hero.hidden = true; }
       var src = SETTINGS.formUrl + "?listing=" + encodeURIComponent(address || "") + "&listing_id=" + encodeURIComponent(id || "");
       modal.classList.remove("step2", "quiz");
@@ -194,7 +194,12 @@
       if (SETTINGS.teamPhoto) {
         var th = modal.querySelector(".sms-watch-hero");
         th.src = SETTINGS.teamPhoto; th.alt = "Frances & Jade"; th.classList.add("team"); th.hidden = false;
+        // Inline !important so nothing on the host site can resize the photo or add space under it
+        [["height","auto"],["max-height","none"],["min-height","0"],["aspect-ratio","2 / 1"],["object-fit","cover"],["object-position","center"],["margin","0 -20px 0"],["padding","0"]].forEach(function (d) { th.style.setProperty(d[0], d[1], "important"); });
       }
+      [".sms-watch-title", ".sms-watch-sub", ".sms-watch-list"].forEach(function (sel) { var el = modal.querySelector(sel); if (el) el.style.setProperty("display", "none", "important"); });
+      frameWrap.style.setProperty("margin", "0", "important");
+      frameWrap.style.setProperty("padding", "0", "important");
       frameWrap.innerHTML =
         '<div class="sms-watch-step2"><div class="sms-watch-names" role="heading" aria-level="2"><span class="sms-watch-from"></span><span class="n"></span></div>' +
         '<p class="sms-watch-letter l1"></p><p class="sms-watch-letter l2"></p><p class="sms-watch-sign"></p>' +
@@ -215,7 +220,12 @@
         var hero = modal.querySelector(".sms-watch-hero"); if (hero) hero.hidden = true;
       });
     }
+    function resetInline() {
+      var th = modal.querySelector(".sms-watch-hero"); if (th) th.removeAttribute("style");
+      [".sms-watch-title", ".sms-watch-sub", ".sms-watch-list"].forEach(function (sel) { var el = modal.querySelector(sel); if (el) el.style.removeProperty("display"); });
+    }
     function closeModal() {
+      resetInline();
       modal.classList.remove("step2", "quiz");
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
