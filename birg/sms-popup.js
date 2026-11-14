@@ -22,7 +22,12 @@
     autoOpenSeconds: 0,          // 0 = only opens on click. e.g. 20 = opens itself after 20s (once per visit)
     title: "Don't miss a move on {address}.",
     sub: "We'll text you when there's:",
-    bullets: ["Price drops", "Open houses", "Just sold", "Big news"]
+    bullets: ["Price drops", "Open houses", "Just sold", "Big news"],
+    // Screen 2 (shows after the form is sent; needs the form to redirect to birg/thanks.html)
+    doneText: "You're in ✓",
+    moreText: "Love this one? We'll find you more like it, before they hit the MLS.",
+    similarButton: "Yes, find me similar homes",
+    quizUrl: "https://listing-matches.vibepreview.app/quiz/bowen"
   };
   // ------------------------------------------------------------------
 
@@ -82,7 +87,12 @@
       ".sms-watch-list{list-style:none;margin:0 0 6px;padding:0 12px;font-family:'Bitter',serif;font-size:16px;color:#435249;display:grid;grid-template-columns:repeat(2,max-content);column-gap:28px;row-gap:2px}" +
       ".sms-watch-list li{padding:3px 0 3px 26px;position:relative;white-space:nowrap}" +
       ".sms-watch-list li:before{content:'\\2713';position:absolute;left:2px;top:3px;font-weight:700;color:#435249}" +
-      "#sms-watch-frame iframe{width:100%;height:600px;border:0;display:block}";
+      "#sms-watch-frame iframe{width:100%;height:600px;border:0;display:block}" +
+      ".sms-watch-step2{text-align:center;padding:8px 12px 18px}" +
+      ".sms-watch-step2 .sms-watch-done{font-family:'DM Sans',sans-serif;font-weight:800;font-size:24px;color:#435249;margin:6px 0 10px}" +
+      ".sms-watch-step2 .sms-watch-more{font-family:'Bitter',serif;font-size:17px;line-height:1.5;color:#435249;margin:0 auto 22px;max-width:380px}" +
+      ".sms-watch-modal.step2 .sms-watch-sub,.sms-watch-modal.step2 .sms-watch-list,.sms-watch-modal.step2 .sms-watch-title{display:none}" +
+      ".sms-watch-modal.quiz #sms-watch-frame iframe{height:78vh}";
     var style = document.createElement("style");
     style.textContent = css;
     document.head.appendChild(style);
@@ -120,14 +130,39 @@
       var hero = modal.querySelector(".sms-watch-hero");
       if (img) { hero.src = img; hero.hidden = false; } else { hero.removeAttribute("src"); hero.hidden = true; }
       var src = SETTINGS.formUrl + "?listing=" + encodeURIComponent(address || "") + "&listing_id=" + encodeURIComponent(id || "");
+      modal.classList.remove("step2", "quiz");
       frameWrap.innerHTML = '<iframe src="' + src + '" title="Get SMS updates"></iframe>';
+      // Screen 2: when the form finishes and redirects (2nd load), swap to "You're in" + similar homes
+      var loads = 0;
+      frameWrap.querySelector("iframe").addEventListener("load", function () {
+        loads++;
+        if (loads === 2) showStep2(address, id);
+      });
       modal.querySelector(".sms-watch-title").textContent = address
         ? SETTINGS.title.replace("{address}", address)
         : "Don't miss a move on this home.";
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
     }
+    function showStep2(address, id) {
+      modal.classList.add("step2");
+      frameWrap.innerHTML =
+        '<div class="sms-watch-step2"><p class="sms-watch-done">' + SETTINGS.doneText + '</p>' +
+        '<p class="sms-watch-more"></p>' +
+        '<button type="button" class="sms-watch-btn sms-watch-similar"></button></div>';
+      frameWrap.querySelector(".sms-watch-more").textContent = SETTINGS.moreText;
+      var b = frameWrap.querySelector(".sms-watch-similar");
+      b.textContent = SETTINGS.similarButton;
+      b.addEventListener("click", function (e) {
+        e.preventDefault(); e.stopPropagation();
+        modal.classList.add("quiz");
+        var q = SETTINGS.quizUrl + "?similar=" + encodeURIComponent(id || "") + "&listing=" + encodeURIComponent(address || "");
+        frameWrap.innerHTML = '<iframe src="' + q + '" title="Find similar homes"></iframe>';
+        var hero = modal.querySelector(".sms-watch-hero"); if (hero) hero.hidden = true;
+      });
+    }
     function closeModal() {
+      modal.classList.remove("step2", "quiz");
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
       frameWrap.innerHTML = "";
