@@ -90,6 +90,8 @@
       "#sms-watch-frame iframe{width:100%;height:600px;border:0;display:block}" +
       ".sms-watch-step2{text-align:center;padding:8px 12px 18px}" +
       ".sms-watch-step2 .sms-watch-done{font-family:'DM Sans',sans-serif;font-weight:800;font-size:24px;color:#435249;margin:6px 0 10px}" +
+      ".sms-watch-step2 .sms-watch-ok{font-family:'DM Sans',sans-serif;font-size:14px;color:#6b7a70;margin:4px 0 6px}" +
+      ".sms-watch-step2 .sms-watch-note{font-family:'Bitter',serif;font-size:14px;color:#6b7a70;margin:12px 0 0}" +
       ".sms-watch-step2 .sms-watch-more{font-family:'Bitter',serif;font-size:17px;line-height:1.5;color:#435249;margin:0 auto 22px;max-width:380px}" +
       ".sms-watch-modal.step2 .sms-watch-sub,.sms-watch-modal.step2 .sms-watch-list,.sms-watch-modal.step2 .sms-watch-title{display:none}" +
       ".sms-watch-modal.quiz #sms-watch-frame iframe{height:78vh}";
@@ -153,9 +155,12 @@
     function showStep2(address, id) {
       modal.classList.add("step2");
       frameWrap.innerHTML =
-        '<div class="sms-watch-step2"><p class="sms-watch-done">' + SETTINGS.doneText + '</p>' +
+        '<div class="sms-watch-step2"><p class="sms-watch-ok"></p><p class="sms-watch-done"></p>' +
         '<p class="sms-watch-more"></p>' +
-        '<button type="button" class="sms-watch-btn sms-watch-similar"></button></div>';
+        '<button type="button" class="sms-watch-btn sms-watch-similar"></button><p class="sms-watch-note"></p></div>';
+      frameWrap.querySelector(".sms-watch-ok").textContent = SETTINGS.doneText;
+      frameWrap.querySelector(".sms-watch-done").textContent = SETTINGS.knowText;
+      frameWrap.querySelector(".sms-watch-note").textContent = SETTINGS.noteText;
       frameWrap.querySelector(".sms-watch-more").textContent = SETTINGS.moreText;
       var b = frameWrap.querySelector(".sms-watch-similar");
       b.textContent = SETTINGS.similarButton;
