@@ -18,7 +18,7 @@
   var SETTINGS = {
     formUrl: "https://go.bowen-links.com/widget/form/UnsUbtDeRcsf4kFPJ61I",
     statusUrl: "https://listing-matches.vibepreview.app/api/public/widget-status",
-    buttonText: "TXT me updates",
+    buttonText: "TXT Me Any Updates",
     autoOpenSeconds: 0,          // 0 = only opens on click. e.g. 20 = opens itself after 20s (once per visit)
     title: "Don't miss a move on {address}.",
     sub: "We'll text you when there's:",
