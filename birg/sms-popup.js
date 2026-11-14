@@ -24,10 +24,15 @@
     sub: "We'll text you when there's:",
     bullets: ["Price drops", "Open houses", "Just sold", "Big news"],
     // Screen 2 (shows after the form is sent; needs the form to redirect to birg/thanks.html)
-    doneText: "You're in ✓",
-    moreText: "Love this one? We'll find you more like it, before they hit the MLS.",
-    similarButton: "Yes, find me similar homes",
-    quizUrl: "https://listing-matches.vibepreview.app/quiz/bowen"
+    // A short letter from the realtors, then one button into the buyer quiz.
+    msgFrom: "A message from",
+    msgNames: "Frances & Jade",
+    letter1: "<strong>Did you know?</strong> We post our listings <strong>on our website first</strong>, sometimes before they even hit the MLS.",
+    letter2: "Don't hear about your perfect home after it's sold. Take our 1-minute quiz and we'll text you the moment one fits.",
+    signoff: "Frances & Jade",
+    similarButton: "Take a 1-minute quiz",
+    quizUrl: "https://listing-matches.vibepreview.app/quiz/bowen",
+    teamPhoto: "https://buzz-png.github.io/nsb-widgets/birg/frances-jade.jpg" // top photo on screen 2 ("" = keep the home photo)
   };
   // ------------------------------------------------------------------
 
@@ -85,6 +90,7 @@
       ".sms-watch-close{position:absolute;top:6px;right:12px;border:0;font-size:30px;line-height:1;cursor:pointer;color:#435249;padding:4px;background:rgba(255,255,255,.9)!important;border-radius:50%!important;width:40px;height:40px;z-index:2}" +
       ".sms-watch-hero{display:block;width:calc(100% + 40px)!important;max-width:none!important;margin:0 -20px 18px;height:170px!important;object-fit:cover}" +
       ".sms-watch-hero[hidden]{display:none}" +
+      ".sms-watch-modal.step2 .sms-watch-hero.team{height:auto!important;aspect-ratio:2/1;object-position:center 30%}" +
       ".sms-watch-box > .sms-watch-hero[hidden] + .sms-watch-title{margin-top:32px}" +
       ".sms-watch-title{font-family:'DM Sans',sans-serif;font-weight:800;font-size:22px;margin:0 0 2px;color:#435249;padding:0 12px}" +
       ".sms-watch-sub{font-family:'Bitter',serif;font-size:16px;margin:0 0 8px;color:#435249;padding:0 12px}" +
@@ -92,7 +98,12 @@
       ".sms-watch-list li{padding:3px 0 3px 26px;position:relative;white-space:nowrap}" +
       ".sms-watch-list li:before{content:'\\2713';position:absolute;left:2px;top:3px;font-weight:700;color:#435249}" +
       "#sms-watch-frame iframe{width:100%;height:600px;border:0;display:block}" +
-      ".sms-watch-step2{text-align:center;padding:8px 12px 18px}" +
+      ".sms-watch-step2{text-align:center;padding:6px 8px 18px;font-family:'Bitter',serif;color:#435249}" +
+      ".sms-watch-step2 .sms-watch-from{display:block;font-family:'Bitter',serif;font-weight:700;font-size:16px;color:#6b7a70;margin:0}" +
+      ".sms-watch-step2 .sms-watch-names{font-family:'Bitter',serif;font-weight:800;font-size:26px;line-height:1.15;color:#435249;margin:0}" +
+      ".sms-watch-step2 .sms-watch-letter{font-family:'Bitter',serif;font-size:17px;line-height:1.6;color:#435249;margin:16px auto 0;max-width:420px}" +
+      ".sms-watch-step2 .sms-watch-letter strong{font-weight:800}" +
+      ".sms-watch-step2 .sms-watch-sign{font-family:'Bitter',serif;font-style:italic;font-size:17px;color:#435249;margin:14px 0 24px}" +
       ".sms-watch-step2 .sms-watch-done{font-family:'DM Sans',sans-serif;font-weight:800;font-size:24px;color:#435249;margin:6px 0 10px}" +
       ".sms-watch-step2 .sms-watch-ok{font-family:'DM Sans',sans-serif;font-size:14px;color:#6b7a70;margin:4px 0 6px}" +
       ".sms-watch-step2 .sms-watch-note{font-family:'Bitter',serif;font-size:14px;color:#6b7a70;margin:12px 0 0}" +
@@ -146,6 +157,7 @@
 
     function openModal(address, id, img) {
       var hero = modal.querySelector(".sms-watch-hero");
+      hero.classList.remove("team"); hero.alt = "";
       if (img) { hero.src = img; hero.hidden = false; } else { hero.removeAttribute("src"); hero.hidden = true; }
       var src = SETTINGS.formUrl + "?listing=" + encodeURIComponent(address || "") + "&listing_id=" + encodeURIComponent(id || "");
       modal.classList.remove("step2", "quiz");
@@ -170,14 +182,19 @@
     });
     function showStep2(address, id) {
       modal.classList.add("step2");
+      if (SETTINGS.teamPhoto) {
+        var th = modal.querySelector(".sms-watch-hero");
+        th.src = SETTINGS.teamPhoto; th.alt = "Frances & Jade"; th.classList.add("team"); th.hidden = false;
+      }
       frameWrap.innerHTML =
-        '<div class="sms-watch-step2"><p class="sms-watch-ok"></p><p class="sms-watch-done"></p>' +
-        '<p class="sms-watch-more"></p>' +
-        '<button type="button" class="sms-watch-btn sms-watch-similar"></button><p class="sms-watch-note"></p></div>';
-      frameWrap.querySelector(".sms-watch-ok").textContent = SETTINGS.doneText;
-      frameWrap.querySelector(".sms-watch-done").textContent = SETTINGS.knowText;
-      frameWrap.querySelector(".sms-watch-note").textContent = SETTINGS.noteText;
-      frameWrap.querySelector(".sms-watch-more").textContent = SETTINGS.moreText;
+        '<div class="sms-watch-step2"><h2 class="sms-watch-names"><span class="sms-watch-from"></span><span class="n"></span></h2>' +
+        '<p class="sms-watch-letter l1"></p><p class="sms-watch-letter l2"></p><p class="sms-watch-sign"></p>' +
+        '<button type="button" class="sms-watch-btn sms-watch-similar"></button></div>';
+      frameWrap.querySelector(".sms-watch-from").textContent = SETTINGS.msgFrom;
+      frameWrap.querySelector(".sms-watch-names .n").textContent = SETTINGS.msgNames;
+      frameWrap.querySelector(".l1").innerHTML = SETTINGS.letter1; // trusted copy from SETTINGS only
+      frameWrap.querySelector(".l2").innerHTML = SETTINGS.letter2;
+      frameWrap.querySelector(".sms-watch-sign").textContent = SETTINGS.signoff;
       var b = frameWrap.querySelector(".sms-watch-similar");
       b.textContent = SETTINGS.similarButton;
       b.addEventListener("click", function (e) {
