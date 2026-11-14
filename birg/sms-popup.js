@@ -18,7 +18,7 @@
   var SETTINGS = {
     formUrl: "https://go.bowen-links.com/widget/form/UnsUbtDeRcsf4kFPJ61I",
     statusUrl: "https://listing-matches.vibepreview.app/api/public/widget-status",
-    buttonText: "Want live text updates?",
+    buttonText: "Want live TXT updates?",
     autoOpenSeconds: 0,          // 0 = only opens on click. e.g. 20 = opens itself after 20s (once per visit)
     title: "Don't miss a move on {address}.",
     sub: "We'll text you when there's:",
@@ -104,7 +104,7 @@
       var fb = document.createElement("button");
       fb.type = "button";
       fb.className = "sms-watch-btn sms-watch-float";
-      fb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="11" height="19" rx="2.2"/><path d="M10.5 18.5h2"/><circle cx="18" cy="5" r="2.6" fill="currentColor" stroke="none"/></svg><span></span>';
+      fb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg><span></span>';
       fb.querySelector("span").textContent = SETTINGS.buttonText;
       document.body.appendChild(fb);
     }
