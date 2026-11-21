@@ -1,0 +1,83 @@
+/* ============================================================
+   NSB CRM — agency-wide sidebar styling (old navigation only)
+   Loaded in Agency Settings > Company > Custom CSS with ONE line:
+     @import url("https://buzz-png.github.io/nsb-widgets/crm/nsb-crm.css");
+
+   Claude edits this file and pushes. GitHub Pages updates in ~1–10 min,
+   then hard refresh (Cmd + Shift + R).
+
+   Note: dies if a sub-account switches to HighLevel's
+   "New Design Experience" navigation (Labs).
+   ============================================================ */
+
+
+/* ---------- 1. Hidden menu items ---------- */
+/* Bowen custom objects: House Names, Land Names */
+a[href*="/objects/house_names/"],
+a[href*="/objects/land_names/"] {
+  display: none !important;
+}
+
+
+/* ---------- 2. Menu order (premium section under the 2nd line) ---------- */
+/* Whole menu is one list, so "order" can move items.
+   No number = normal spot above the line. 1, 2, 3... = under the line. */
+nav:has(> a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]) {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"] { order: 1; } /* Listing Matches */
+nav > a[href*="/marketing/"] { order: 2; }                  /* Marketing */
+
+
+/* ---------- 3. Listing Matches — mint premium link ---------- */
+/* Custom menu link. ID starts with a number, so a[id="..."] not #id */
+a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"] {
+  position: relative !important;
+  margin-top: 28px !important;
+  color: #4FE3C1 !important;
+  opacity: 1 !important;
+  border-radius: 8px !important;
+  transition: background 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"] * {
+  color: #4FE3C1 !important;
+  transition: transform 0.25s ease !important;
+}
+
+a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]:hover {
+  background: rgba(79, 227, 193, 0.12) !important;
+  box-shadow: inset 3px 0 0 #4FE3C1, 0 0 14px rgba(79, 227, 193, 0.25) !important;
+}
+
+a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]:hover > * {
+  transform: translateX(4px);
+}
+
+/* The 2nd white divider line — hangs off the FIRST premium link */
+a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: #ffffff;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* "New" badge, right edge */
+a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]::after {
+  content: "New";
+  margin-left: auto;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #263040;
+  background: #4FE3C1;
+  border-radius: 5px;
+  line-height: 1.6;
+}
