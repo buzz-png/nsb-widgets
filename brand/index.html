@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Brand</title>
+<!--
+  NSB Brand Hub — one template for every client.
+  Opened from ONE custom menu link in the NSB CRM:
+    https://buzz-png.github.io/nsb-widgets/brand/?id={{location.id}}
+  The page loads brands/<location id>.json. To add a brand, add a file there.
+  See brand/README.md.
+-->
+<style>
+  :root { --ink:#111; --muted:#6b6b6b; --line:#e6e6e6; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#fff; color:var(--ink); font:15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:40px 24px 56px; }
+  .nsb { font-size:11px; letter-spacing:.14em; color:var(--muted); }
+  h1 { font-size:30px; font-weight:600; margin:6px 0 2px; }
+  .sub { color:var(--muted); font-size:14px; }
+  .label { font-size:11px; letter-spacing:.14em; color:var(--muted); margin:32px 0 10px; text-transform:uppercase; }
+  .grid { display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); }
+  .btn { display:flex; align-items:center; gap:10px; padding:12px 14px; border:1px solid var(--ink); border-radius:10px; color:var(--ink); text-decoration:none; font-weight:500; background:#fff; transition:background .15s, color .15s; }
+  .btn:hover { background:var(--ink); color:#fff; }
+  .btn svg { width:18px; height:18px; flex:none; }
+  .btn .ext { margin-left:auto; opacity:.6; }
+  .card { border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .font-name { font-size:26px; line-height:1.2; }
+  .font-role { font-size:12px; color:var(--muted); margin-top:4px; }
+  .sw { border:1px solid var(--line); border-radius:12px; overflow:hidden; cursor:pointer; background:#fff; text-align:left; padding:0; font:inherit; color:inherit; transition:border-color .15s; }
+  .sw:hover { border-color:var(--ink); }
+  .chip { height:72px; border-bottom:1px solid var(--line); }
+  .sw-body { padding:10px 14px; }
+  .sw-name { font-weight:600; font-size:14px; }
+  .sw-hex { font-size:13px; color:var(--muted); font-family:ui-monospace, Menlo, monospace; }
+  .logo { display:flex; align-items:center; justify-content:center; height:110px; border:1px solid var(--line); border-radius:12px; padding:16px; text-decoration:none; position:relative; }
+  .logo img { max-width:100%; max-height:100%; object-fit:contain; }
+  .logo span { position:absolute; bottom:6px; left:10px; font-size:11px; color:var(--muted); }
+  .logo.dark span { color:rgba(255,255,255,.75); }
+  .empty { padding:80px 0; text-align:center; color:var(--muted); }
+  footer { margin-top:40px; font-size:11px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="empty">Loading…</div></div>
+
+<script>
+const ICONS = {
+  palette: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.5 3-3 3h-2a2 2 0 0 0-1 3.7c.6.4.5 2.3-3 2.3z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16.5" cy="10.5" r="1"/></svg>',
+  file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>',
+  folder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+  ext: '<svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>'
+};
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const app = document.getElementById('app');
+const id = new URLSearchParams(location.search).get('id') || '';
+
+function loadFonts(fonts) {
+  if (!fonts?.length) return;
+  const fam = fonts.map(f => 'family=' + encodeURIComponent(f.name).replace(/%20/g, '+') + ':wght@400;600').join('&');
+  const l = document.createElement('link');
+  l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?' + fam + '&display=swap';
+  document.head.appendChild(l);
+}
+
+// Clipboard: try the modern API, fall back for iframes without permission
+async function copy(text) {
+  try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
+  const t = document.createElement('textarea');
+  t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+  document.body.appendChild(t); t.select();
+  let ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+  t.remove(); return ok;
+}
+
+function render(b) {
+  document.title = b.client + ' brand';
+  loadFonts(b.fonts);
+  const heading = b.fonts?.find(f => /head/i.test(f.role))?.name;
+  const links = (b.links || []).map(l => {
+    const target = l.open === 'crm' ? '_top' : '_blank';
+    return `<a class="btn" href="${esc(l.url)}" target="${target}" rel="noopener">${ICONS[l.icon] || ICONS.file}${esc(l.label)}${l.open === 'crm' ? '' : ICONS.ext}</a>`;
+  }).join('');
+  const fonts = (b.fonts || []).map(f =>
+    `<div class="card"><div class="font-name" style="font-family:'${esc(f.name)}'">${esc(f.name)}</div><div class="font-role">${esc(f.role || '')}</div></div>`).join('');
+  const colours = (b.colours || []).map(c =>
+    `<button class="sw" data-hex="${esc(c.hex)}"><div class="chip" style="background:${esc(c.hex)}"></div><div class="sw-body"><div class="sw-name">${esc(c.name)}</div><div class="sw-hex">${esc(c.hex)}</div></div></button>`).join('');
+  const logos = (b.logos || []).map(g => {
+    const dark = parseInt((g.bg || '#fff').slice(1), 16) < 0x808080;
+    return `<a class="logo${dark ? ' dark' : ''}" href="${esc(g.url)}" target="_blank" rel="noopener" style="background:${esc(g.bg || '#fff')}"><img src="${esc(g.url)}" alt="${esc(g.label)}"><span>${esc(g.label)}</span></a>`;
+  }).join('');
+
+  app.innerHTML = `
+    <div class="nsb">NSB</div>
+    <h1 style="${heading ? `font-family:'${esc(heading)}',serif` : ''}">${esc(b.client)} brand</h1>
+    <div class="sub">${esc(b.name || '')}</div>
+    ${links ? `<div class="label">Quick links</div><div class="grid">${links}</div>` : ''}
+    ${fonts ? `<div class="label">Fonts</div><div class="grid">${fonts}</div>` : ''}
+    ${colours ? `<div class="label">Colours · tap to copy</div><div class="grid">${colours}</div>` : ''}
+    ${logos ? `<div class="label">Logos · tap to open</div><div class="grid">${logos}</div>` : ''}
+    <footer>From the NSB CRM brand board · updated ${esc(b.updated || '')}</footer>`;
+
+  app.querySelectorAll('.sw').forEach(s => s.addEventListener('click', async () => {
+    const hex = s.dataset.hex, el = s.querySelector('.sw-hex');
+    el.textContent = (await copy(hex)) ? 'Copied ✓' : hex;
+    setTimeout(() => (el.textContent = hex), 1200);
+  }));
+}
+
+if (!/^[A-Za-z0-9]+$/.test(id)) {
+  app.innerHTML = '<div class="empty">No brand set up for this account yet.</div>';
+} else {
+  fetch('brands/' + id + '.json', { cache: 'no-cache' })
+    .then(r => { if (!r.ok) throw 0; return r.json(); })
+    .then(render)
+    .catch(() => { app.innerHTML = '<div class="empty">No brand set up for this account yet.</div>'; });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "client": "BIRG",
+  "name": "Bowen Island Real Estate Group",
+  "locationId": "BvXZfZS8sKPUOtmyHiRj",
+  "updated": "2026-11-21",
+  "source": "NSB CRM brand board + BIRG Google Drive",
+  "links": [
+    {
+      "label": "Brand board",
+      "icon": "palette",
+      "url": "https://login.nsbmarketing.ca/v2/location/BvXZfZS8sKPUOtmyHiRj/marketing/brand-boards/builder/698f6c9b36440e177612780a",
+      "open": "crm"
+    },
+    {
+      "label": "Brand guideline",
+      "icon": "file",
+      "url": "https://drive.google.com/file/d/1HLrQbjvVvHW2KDxdB8XbFua_1e_-cG3u/view?usp=sharing",
+      "open": "tab"
+    },
+    {
+      "label": "Logos and assets",
+      "icon": "folder",
+      "url": "https://drive.google.com/drive/u/0/folders/1OOhFtbfcPKad1S5uv5nMdUROfK92p-M2",
+      "open": "tab"
+    }
+  ],
+  "fonts": [
+    { "name": "Bitter", "role": "Headings" },
+    { "name": "DM Sans", "role": "Body" }
+  ],
+  "colours": [
+    { "name": "Fir", "hex": "#43534A" },
+    { "name": "Sky", "hex": "#C1D5E5" },
+    { "name": "White", "hex": "#FFFFFF" }
+  ],
+  "logos": [
+    { "label": "Logo 1", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfa9dadb7c222f71566669.png", "bg": "#FFFFFF" },
+    { "label": "Logo 2", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfab31db7c222f7156c59e.png", "bg": "#FFFFFF" },
+    { "label": "On Fir", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfa9dadb7c222f71566669.png", "bg": "#43534A" }
+  ]
+}
