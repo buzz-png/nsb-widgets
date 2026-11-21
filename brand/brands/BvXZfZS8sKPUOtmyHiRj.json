@@ -35,7 +35,6 @@
   ],
   "logos": [
     { "label": "Logo 1", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfa9dadb7c222f71566669.png", "bg": "#FFFFFF" },
-    { "label": "Logo 2", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfab31db7c222f7156c59e.png", "bg": "#FFFFFF" },
-    { "label": "On Fir", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfa9dadb7c222f71566669.png", "bg": "#43534A" }
+    { "label": "Logo 2", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfab31db7c222f7156c59e.png", "bg": "#FFFFFF" }
   ]
 }
