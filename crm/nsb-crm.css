@@ -44,6 +44,7 @@ a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"] { order: 1; } /* Listing Matches */
 nav > a[href*="/marketing/"] { order: 2; }                  /* Marketing */
 a[id="c75d47d1-b8aa-403c-8029-ca73db209e40"] { order: 3; }  /* Branding & Logos (Brand Hub), very bottom */
 a[id="b91e33a0-432d-4777-a9b0-08a470d0e09d"] { order: 4; }  /* ADMIN: TextDesk - Add User */
+a[id="a51e243a-df89-4229-a83d-15a84c424549"] { order: 5; }  /* ADMIN: QuickFire - Add User */
 
 
 /* ---------- 3. Listing Matches — mint premium link ---------- */
@@ -94,7 +95,7 @@ nav:has(> a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]):not(:has(
   > a[id="sb_app-media"], > a[id="sb_reputation"], > a[id="sb_reporting"],
   > a[id="sb_app-marketplace"], > a[id="sb_AI Agents"], > a[id="sb_vibe"],
   > a[id="sb_settings"],
-  > a:not([id^="sb_"]):not([id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]):not([id="c75d47d1-b8aa-403c-8029-ca73db209e40"]):not([id="b91e33a0-432d-4777-a9b0-08a470d0e09d"])
+  > a:not([id^="sb_"]):not([id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]):not([id="c75d47d1-b8aa-403c-8029-ca73db209e40"]):not([id="b91e33a0-432d-4777-a9b0-08a470d0e09d"]):not([id="a51e243a-df89-4229-a83d-15a84c424549"])
 )) > div {
   display: none !important;
 }
@@ -120,14 +121,17 @@ a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]::after {
    To add an admin link: add its id to the list below and give it
    the next order number in section 2 (5, 6...). Only the first one
    gets the ::before line. */
-a[id="b91e33a0-432d-4777-a9b0-08a470d0e09d"] {   /* TextDesk - Add User */
+a[id="b91e33a0-432d-4777-a9b0-08a470d0e09d"],   /* TextDesk - Add User */
+a[id="a51e243a-df89-4229-a83d-15a84c424549"] {   /* QuickFire - Add User */
   color: #C9B8FF !important;
   opacity: 1 !important;
 }
-a[id="b91e33a0-432d-4777-a9b0-08a470d0e09d"] * {
+a[id="b91e33a0-432d-4777-a9b0-08a470d0e09d"] *,
+a[id="a51e243a-df89-4229-a83d-15a84c424549"] * {
   color: #C9B8FF !important;
 }
-a[id="b91e33a0-432d-4777-a9b0-08a470d0e09d"]:hover {
+a[id="b91e33a0-432d-4777-a9b0-08a470d0e09d"]:hover,
+a[id="a51e243a-df89-4229-a83d-15a84c424549"]:hover {
   background: rgba(201, 184, 255, 0.12) !important;
 }
 
