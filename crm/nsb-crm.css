@@ -18,6 +18,11 @@ a[href*="/objects/land_names/"] {
   display: none !important;
 }
 
+/* Marketing → Social Planner: hide the Social Intelligence tab (every sub-account) */
+[id="sp-pg-landing-tabs-tab-social-listening"] {
+  display: none !important;
+}
+
 
 /* ---------- 2. Menu order (premium section under the 2nd line) ---------- */
 /* Whole menu is one list, so "order" can move items.
