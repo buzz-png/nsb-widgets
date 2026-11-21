@@ -18,6 +18,14 @@ a[href*="/objects/land_names/"] {
   display: none !important;
 }
 
+/* Marketing tabs: Snippets + Trigger Links (every sub-account).
+   Buzz-only tools. Still open by direct URL; shortcuts live in the
+   Brand Hub's closed "Developer code" section. */
+[id="tb_email-templates"],
+[id="tb_trigger-links"] {
+  display: none !important;
+}
+
 /* Marketing → Social Planner: hide the Social Intelligence tab (every sub-account) */
 [id="sp-pg-landing-tabs-tab-social-listening"] {
   display: none !important;

@@ -110,8 +110,16 @@ function render(b) {
     return `<a class="logo${dark ? ' dark' : ''}" href="${esc(g.url)}" download style="background:${esc(g.bg || '#fff')}"><img src="${esc(g.url)}" alt="${esc(g.label)}"><span>${esc(g.label)}</span></a>`;
   }).join('');
 
-  const dev = (b.dev || []).length ? `<details class="dev"><summary>Developer code</summary>${b.dev.map((d, i) =>
-    `<div class="code"><div class="code-label">${esc(d.label)}</div><div class="code-row"><pre id="code${i}">${esc(d.code)}</pre><button data-code="${i}">Copy</button></div></div>`).join('')}</details>` : '';
+  // Buzz-only shortcuts to CRM pages hidden from the menu by crm/nsb-crm.css
+  const crm = 'https://login.nsbmarketing.ca/v2/location/' + encodeURIComponent(id);
+  const shortcuts = [
+    ['Snippets', crm + '/marketing/templates'],
+    ['Trigger Links', crm + '/marketing/trigger-links']
+  ].map(([t, u]) => `<a class="pop" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join(' ');
+  const dev = `<details class="dev"><summary>Developer code</summary>
+    <div class="code"><div class="code-label">Hidden CRM pages</div><div style="display:flex;gap:8px;flex-wrap:wrap">${shortcuts}</div></div>
+    ${(b.dev || []).map((d, i) =>
+    `<div class="code"><div class="code-label">${esc(d.label)}</div><div class="code-row"><pre id="code${i}">${esc(d.code)}</pre><button data-code="${i}">Copy</button></div></div>`).join('')}</details>`;
 
   app.innerHTML = `
     <div class="top"><div class="nsb">NSB</div>${inFrame ? `<a class="pop" href="${esc(location.href)}" target="_blank" rel="noopener">${ICONS.ext.replace('class="ext"','')}Open in new tab</a>` : ''}</div>
