@@ -3,14 +3,8 @@
   "name": "Bowen Island Real Estate Group",
   "locationId": "BvXZfZS8sKPUOtmyHiRj",
   "updated": "2026-11-21",
-  "source": "NSB CRM brand board + BIRG Google Drive",
+  "source": "NSB CRM brand board + BIRG Google Drive (Digital logos copied into brand/assets/birg)",
   "links": [
-    {
-      "label": "Brand board",
-      "icon": "palette",
-      "url": "https://login.nsbmarketing.ca/v2/location/BvXZfZS8sKPUOtmyHiRj/marketing/brand-boards/builder/698f6c9b36440e177612780a",
-      "open": "crm"
-    },
     {
       "label": "Brand guideline",
       "icon": "file",
@@ -22,19 +16,74 @@
       "icon": "folder",
       "url": "https://drive.google.com/drive/u/0/folders/1OOhFtbfcPKad1S5uv5nMdUROfK92p-M2",
       "open": "tab"
+    },
+    {
+      "label": "Brand board",
+      "icon": "palette",
+      "url": "https://login.nsbmarketing.ca/v2/location/BvXZfZS8sKPUOtmyHiRj/marketing/brand-boards/builder/698f6c9b36440e177612780a",
+      "open": "tab"
     }
   ],
   "fonts": [
-    { "name": "Bitter", "role": "Headings" },
-    { "name": "DM Sans", "role": "Body" }
+    {
+      "name": "Bitter",
+      "role": "Headings"
+    },
+    {
+      "name": "DM Sans",
+      "role": "Body"
+    }
   ],
   "colours": [
-    { "name": "Fir", "hex": "#43534A" },
-    { "name": "Sky", "hex": "#C1D5E5" },
-    { "name": "White", "hex": "#FFFFFF" }
+    {
+      "name": "Fir",
+      "hex": "#43534A"
+    },
+    {
+      "name": "Sky",
+      "hex": "#C1D5E5"
+    },
+    {
+      "name": "White",
+      "hex": "#FFFFFF"
+    }
   ],
   "logos": [
-    { "label": "Logo 1", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfa9dadb7c222f71566669.png", "bg": "#FFFFFF" },
-    { "label": "Logo 2", "url": "https://assets.cdn.filesafe.space/BvXZfZS8sKPUOtmyHiRj/media/69dfab31db7c222f7156c59e.png", "bg": "#FFFFFF" }
+    {
+      "label": "Horizontal",
+      "url": "assets/birg/horizontal-green.png",
+      "bg": "#FFFFFF"
+    },
+    {
+      "label": "Stacked",
+      "url": "assets/birg/stacked-green.png",
+      "bg": "#FFFFFF"
+    },
+    {
+      "label": "Icon",
+      "url": "assets/birg/icon-green.png",
+      "bg": "#FFFFFF"
+    },
+    {
+      "label": "Horizontal · white",
+      "url": "assets/birg/horizontal-white.png",
+      "bg": "#43534A"
+    },
+    {
+      "label": "Stacked · white",
+      "url": "assets/birg/stacked-white.png",
+      "bg": "#43534A"
+    },
+    {
+      "label": "Icon · white",
+      "url": "assets/birg/icon-white.png",
+      "bg": "#43534A"
+    }
+  ],
+  "dev": [
+    {
+      "label": "Website: SMS updates pop-up (listing pages)",
+      "code": "<script src=\"https://buzz-png.github.io/nsb-widgets/birg/sms-popup.js\" defer></script>"
+    }
   ]
 }

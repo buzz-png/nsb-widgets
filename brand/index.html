@@ -39,6 +39,21 @@
   .logo img { max-width:100%; max-height:100%; object-fit:contain; }
   .logo span { position:absolute; bottom:6px; left:10px; font-size:11px; color:var(--muted); }
   .logo.dark span { color:rgba(255,255,255,.75); }
+  .top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .pop { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:6px 10px; text-decoration:none; white-space:nowrap; }
+  .pop:hover { border-color:var(--ink); }
+  .pop svg { width:14px; height:14px; }
+  details.dev { margin-top:36px; border-top:1px solid var(--line); padding-top:14px; }
+  details.dev summary { cursor:pointer; font-size:12px; color:var(--muted); list-style:none; }
+  details.dev summary::-webkit-details-marker { display:none; }
+  details.dev summary::before { content:'▸ '; }
+  details.dev[open] summary::before { content:'▾ '; }
+  .code { margin-top:12px; }
+  .code-label { font-size:12px; color:var(--muted); margin-bottom:4px; }
+  .code-row { display:flex; gap:8px; align-items:stretch; }
+  .code pre { flex:1; margin:0; padding:10px 12px; background:#f6f6f6; border-radius:8px; font:12px/1.5 ui-monospace, Menlo, monospace; white-space:pre-wrap; word-break:break-all; }
+  .code button { border:1px solid var(--line); background:#fff; border-radius:8px; padding:0 12px; font:12px inherit; cursor:pointer; }
+  .code button:hover { border-color:var(--ink); }
   .empty { padding:80px 0; text-align:center; color:var(--muted); }
   footer { margin-top:40px; font-size:11px; color:var(--muted); }
 </style>
@@ -56,6 +71,7 @@ const ICONS = {
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const app = document.getElementById('app');
+const inFrame = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
 const id = new URLSearchParams(location.search).get('id') || '';
 
 function loadFonts(fonts) {
@@ -91,18 +107,28 @@ function render(b) {
     `<button class="sw" data-hex="${esc(c.hex)}"><div class="chip" style="background:${esc(c.hex)}"></div><div class="sw-body"><div class="sw-name">${esc(c.name)}</div><div class="sw-hex">${esc(c.hex)}</div></div></button>`).join('');
   const logos = (b.logos || []).map(g => {
     const dark = parseInt((g.bg || '#fff').slice(1), 16) < 0x808080;
-    return `<a class="logo${dark ? ' dark' : ''}" href="${esc(g.url)}" target="_blank" rel="noopener" style="background:${esc(g.bg || '#fff')}"><img src="${esc(g.url)}" alt="${esc(g.label)}"><span>${esc(g.label)}</span></a>`;
+    return `<a class="logo${dark ? ' dark' : ''}" href="${esc(g.url)}" download style="background:${esc(g.bg || '#fff')}"><img src="${esc(g.url)}" alt="${esc(g.label)}"><span>${esc(g.label)}</span></a>`;
   }).join('');
 
+  const dev = (b.dev || []).length ? `<details class="dev"><summary>Developer code</summary>${b.dev.map((d, i) =>
+    `<div class="code"><div class="code-label">${esc(d.label)}</div><div class="code-row"><pre id="code${i}">${esc(d.code)}</pre><button data-code="${i}">Copy</button></div></div>`).join('')}</details>` : '';
+
   app.innerHTML = `
-    <div class="nsb">NSB</div>
+    <div class="top"><div class="nsb">NSB</div>${inFrame ? `<a class="pop" href="${esc(location.href)}" target="_blank" rel="noopener">${ICONS.ext.replace('class="ext"','')}Open in new tab</a>` : ''}</div>
     <h1 style="${heading ? `font-family:'${esc(heading)}',serif` : ''}">${esc(b.client)} brand</h1>
     <div class="sub">${esc(b.name || '')}</div>
     ${links ? `<div class="label">Quick links</div><div class="grid">${links}</div>` : ''}
     ${fonts ? `<div class="label">Fonts</div><div class="grid">${fonts}</div>` : ''}
     ${colours ? `<div class="label">Colours · tap to copy</div><div class="grid">${colours}</div>` : ''}
-    ${logos ? `<div class="label">Logos · tap to open</div><div class="grid">${logos}</div>` : ''}
+    ${logos ? `<div class="label">Logos · tap to download</div><div class="grid">${logos}</div>` : ''}
+    ${dev}
     <footer>From the NSB CRM brand board · updated ${esc(b.updated || '')}</footer>`;
+
+  app.querySelectorAll('[data-code]').forEach(btn => btn.addEventListener('click', async () => {
+    const txt = document.getElementById('code' + btn.dataset.code).textContent;
+    btn.textContent = (await copy(txt)) ? 'Copied ✓' : 'Copy';
+    setTimeout(() => (btn.textContent = 'Copy'), 1200);
+  }));
 
   app.querySelectorAll('.sw').forEach(s => s.addEventListener('click', async () => {
     const hex = s.dataset.hex, el = s.querySelector('.sw-hex');
