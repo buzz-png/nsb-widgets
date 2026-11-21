@@ -29,6 +29,7 @@ nav:has(> a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"]) {
 
 a[id="e1b417cf-0fc6-4ba8-901c-dad174b0dff4"] { order: 1; } /* Listing Matches */
 nav > a[href*="/marketing/"] { order: 2; }                  /* Marketing */
+a[id="c75d47d1-b8aa-403c-8029-ca73db209e40"] { order: 3; }  /* Branding & Logos (Brand Hub), very bottom */
 
 
 /* ---------- 3. Listing Matches — mint premium link ---------- */
