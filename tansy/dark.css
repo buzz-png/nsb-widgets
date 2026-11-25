@@ -1,0 +1,68 @@
+/* Loaded on Home Variation 2 only (that page's own Head code):
+     <link rel="stylesheet" href="https://buzz-png.github.io/nsb-widgets/tansy/dark.css">
+*/
+/* Tansy Dark CSS Version 19 - loads on Home Variation 2 only */
+:root{--dark-night:#012A38;--dark-band:#00374B;--dark-lift:#0B4A5F;--dark-line:rgba(135,182,190,.25);--driftwood:#E4D8C4}
+html,html body{background-color:var(--dark-night) !important}
+/* Section backgrounds. Skips the "Testimonials REMax" section (section-5hmbjKMMEf) so its
+   background comes from the builder and Buzz can test colours there. */
+html body .c-section:not(:has(.c-nav-menu-v2)):not(.section-5hmbjKMMEf){background-color:var(--dark-night) !important;border-top:1px solid var(--dark-line)}
+html body .bg-section-ZShLp81IPk{background-image:none !important;background-color:transparent !important}
+html body .c-section:not(:has(.c-nav-menu-v2)):not(.section-5hmbjKMMEf):nth-of-type(even){background-color:var(--dark-band) !important}
+html body .section-mist{background-color:var(--dark-lift) !important}
+html body .c-section:not(:has(.c-nav-menu-v2)) .c-row,html body .c-section:not(:has(.c-nav-menu-v2)) .c-column{background-color:transparent !important}
+html body h1,html body h1 *,html body h2,html body h2 *,html body h3,html body h3 *,html body h4,html body h4 *{color:var(--brand-white) !important}
+html body h5,html body h5 *,html body h6,html body h6 *,html body .eyebrow,html body .eyebrow *{color:var(--brand-soft) !important}
+html body p,html body p *,html body li,html body li *{color:var(--brand-light) !important}
+html body p strong,html body li strong,html body b,html body strong{color:var(--brand-white) !important}
+html body p a,html body li a{color:var(--brand-light) !important;text-decoration-color:var(--brand-accent) !important}
+html body p a:hover,html body li a:hover{color:var(--brand-accent) !important}
+html body .c-section:not(:has(.c-nav-menu-v2)):not(.section-PbMW2LnM_Q):not(.site-footer) .c-button a,html body .c-section:not(:has(.c-nav-menu-v2)):not(.section-PbMW2LnM_Q):not(.site-footer) .c-button button{background:transparent !important;background-color:transparent !important;border:1px solid var(--brand-accent) !important;color:var(--brand-accent) !important;border-radius:0 !important;box-shadow:none !important;text-transform:uppercase;letter-spacing:.15em;transition:background-color .3s ease,color .3s ease !important}
+html body .c-section:not(:has(.c-nav-menu-v2)):not(.section-PbMW2LnM_Q):not(.site-footer) .c-button a *,html body .c-section:not(:has(.c-nav-menu-v2)):not(.section-PbMW2LnM_Q):not(.site-footer) .c-button button *{color:inherit !important}
+html body .c-section:not(:has(.c-nav-menu-v2)):not(.section-PbMW2LnM_Q):not(.site-footer) .c-button a:hover,html body .c-section:not(:has(.c-nav-menu-v2)):not(.section-PbMW2LnM_Q):not(.site-footer) .c-button button:hover{background-color:var(--brand-accent) !important;color:var(--brand-primary) !important}
+/* Hero: the misty photo fades gradually into the Night Teal page. Taller fade (65% of the hero)
+   with eased steps, so it starts barely there and deepens slowly, no visible line. */
+html body .c-section.section-43kyctKwp1{position:relative;border-top:0 !important}
+html body .c-section.section-43kyctKwp1::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:65%;background:linear-gradient(to bottom,rgba(1,42,56,0) 0%,rgba(1,42,56,.04) 12%,rgba(1,42,56,.12) 24%,rgba(1,42,56,.24) 36%,rgba(1,42,56,.39) 48%,rgba(1,42,56,.55) 60%,rgba(1,42,56,.7) 71%,rgba(1,42,56,.83) 81%,rgba(1,42,56,.93) 90%,#012A38 100%);pointer-events:none;z-index:1}
+/* Hero logo on the top layer, above the fade, so it stays crisp white */
+html body .section-43kyctKwp1 .c-image{position:relative;z-index:3}
+/* Tansy rising into the mist: the section has a -200px top margin (set in the builder), so it
+   overlaps the hero. See-through background + sits above the hero fade so she and the text show. */
+html body .c-section.section-ZShLp81IPk.section-ZShLp81IPk{border-top:0 !important;background-color:transparent !important;position:relative;z-index:2}
+/* Phones: no overlap, so her head can't land on the logo */
+@media (max-width:767px){html body .c-section.section-ZShLp81IPk.section-ZShLp81IPk{margin-top:0 !important}}
+/* Wider text column (desktop): row widened 1170 -> 1290px, photo column stays 574px,
+   the text column takes the extra width so its lines run longer and it sits shorter */
+@media (min-width:1025px){html body .section-ZShLp81IPk > .inner{max-width:1290px !important}html body .section-ZShLp81IPk .col-IsMvDtLVxd7{flex:0 0 574px !important;width:574px !important}html body .section-ZShLp81IPk .col-hG095yjYaVJ{flex:1 1 auto !important;width:auto !important}}
+/* Tansy's photo: crisp, with a thin Summit Gold stroke border (the gold from the A in her logo) */
+html body img[src*="6af102d03f4edcbb004e6f8e"]{-webkit-mask-image:none !important;mask-image:none !important;filter:none !important;box-shadow:none !important;border:2px solid var(--brand-accent) !important;box-sizing:border-box !important}
+/* Image-only columns sit on the bottom of the row. The builder centres a column's content
+   vertically, so when the text beside it is taller the photo floated with a gap underneath. */
+html body .c-column:has(.c-image):not(:has(.c-heading, .c-paragraph, .c-button)) .vertical.inner{justify-content:flex-end !important}
+/* Testimonials REMax section: Testimonials button in Deep Teal (outline + text), so it reads on
+   the light background; hover fills Deep Teal with gold text */
+html body .c-section.section-5hmbjKMMEf.section-5hmbjKMMEf.section-5hmbjKMMEf.section-5hmbjKMMEf .c-button a,html body .c-section.section-5hmbjKMMEf.section-5hmbjKMMEf.section-5hmbjKMMEf.section-5hmbjKMMEf .c-button button{border-color:var(--brand-primary) !important;color:var(--brand-primary) !important}
+html body .c-section.section-5hmbjKMMEf.section-5hmbjKMMEf.section-5hmbjKMMEf.section-5hmbjKMMEf .c-button a:hover,html body .c-section.section-5hmbjKMMEf.section-5hmbjKMMEf.section-5hmbjKMMEf.section-5hmbjKMMEf .c-button button:hover{background-color:var(--brand-primary) !important;color:var(--brand-accent) !important}
+/* Currently on the Market: warm Driftwood band (light, not white), Deep Teal text */
+html body .c-section.c-wrapper.section-sNIF2DBP38.section-sNIF2DBP38:not(:has(.c-nav-menu-v2)):nth-of-type(n){background-color:var(--driftwood) !important;border-top:0 !important}
+html body .section-sNIF2DBP38 .bg,html body .section-sNIF2DBP38 .c-row,html body .section-sNIF2DBP38 .c-column{background-color:transparent !important}
+html body .section-sNIF2DBP38 h1,html body .section-sNIF2DBP38 h1 *,html body .section-sNIF2DBP38 h2,html body .section-sNIF2DBP38 h2 *,html body .section-sNIF2DBP38 h3,html body .section-sNIF2DBP38 h3 *,html body .section-sNIF2DBP38 h4,html body .section-sNIF2DBP38 h4 *{color:var(--brand-primary) !important}
+html body .section-sNIF2DBP38 p,html body .section-sNIF2DBP38 p *,html body .section-sNIF2DBP38 li,html body .section-sNIF2DBP38 li *{color:var(--brand-text) !important}
+html body .section-sNIF2DBP38 h5,html body .section-sNIF2DBP38 h5 *,html body .section-sNIF2DBP38 h6,html body .section-sNIF2DBP38 h6 *,html body .section-sNIF2DBP38 .eyebrow,html body .section-sNIF2DBP38 .eyebrow *{color:var(--brand-muted) !important}
+html body .section-sNIF2DBP38 .c-button a,html body .section-sNIF2DBP38 .c-button button{border-color:var(--brand-primary) !important;color:var(--brand-primary) !important}
+html body .section-sNIF2DBP38 .c-button a:hover,html body .section-sNIF2DBP38 .c-button button:hover{background-color:var(--brand-primary) !important;color:var(--brand-accent) !important}
+html body .spec-grid .c-column:has(.c-paragraph){background-color:var(--dark-lift) !important;border-left:1px solid var(--dark-line) !important}
+html body .spec-grid .c-column:has(.c-paragraph) p{color:var(--brand-soft) !important}
+html body .spec-grid .c-column:has(.c-paragraph) h3{color:var(--brand-white) !important}
+html body .card,html body .card-lift{background-color:var(--dark-lift) !important;border:1px solid var(--dark-line) !important}
+html body input,html body textarea,html body select{background-color:var(--dark-lift) !important;border:1px solid var(--dark-line) !important;color:var(--brand-light) !important}
+html body input::placeholder,html body textarea::placeholder{color:var(--brand-soft) !important}
+html body .gold-frame{position:relative}html body .gold-frame img{position:relative;z-index:1}
+html body .gold-frame::before{content:"";position:absolute;inset:16px -16px -16px 16px;border:1px solid var(--brand-accent);z-index:0;pointer-events:none}
+html body .hero-fade{position:relative}
+html body .hero-fade::after{content:"";position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(to bottom,transparent,var(--dark-night));pointer-events:none}
+/* RE/MAX logo flipped white on dark sections, but left in its original colours in the
+   Testimonials REMax section (section-5hmbjKMMEf) */
+html body .c-section:not(.section-5hmbjKMMEf) img[src*="6ac7a4a589da6e6f9bb32fa0"]{filter:brightness(0) invert(1) !important}
+html body ul li::marker{color:var(--brand-accent) !important}
+::selection{background:var(--brand-accent);color:var(--brand-primary)}
